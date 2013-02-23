@@ -1,0 +1,24 @@
+Interfaces are located in /sys/devices/platform/clevo_wmi
+
+Right now this only supports the kbled stuff.
+
+KBLED:
+
+BUG: Sometimes you have to hit the fn-backlight disable key once or twice to make things work
+
+left/middle/right works by setting a binary value XYZ where X is green, Y is red, and Z is blue
+
+all_off: write a 1 to turn off the backlight
+
+brightness: accepts 0-10 where 10 also enables the use of the fn keys
+
+fade: fades the colors you set in and out. accepts a speed 0-3 where 0 is off, 3 is fastest
+
+left_right, random, random_flicker, single_fade, out_mid: 1 turns on these paterns
+
+pattern_off: 1 turns off any pattern and returns to previously user set colors
+
+random_fade: fades random color in and out. XYY X is speed 0-3 and YY is the number
+    of times to repeat that color. I just use 301 for this value.
+
+

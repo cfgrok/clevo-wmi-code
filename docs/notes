@@ -1,0 +1,24 @@
+lsn3 - brightness (0 is off, even keys won't work. 9 manual)
+
+0x10000000 stops all animation?
+0x1001axxx animates fade in/out slow. 2 faster, 3 fastest
+
+lsns(0-2) msb does nothing. 7 is all on. 1 is blue 2 is red 4 is green 8 means pattern enable?
+
+msn 0x80 knight rider pattern 0x1 pattern off
+msn 0x90 flicker random (outside-middle)
+msn 0xa0 random flicker pattern (all)
+msn 0xb0 one at a time fade in/out random color?
+msn 0x70 - random switch
+msn 0x10 - pattern off (but fade according to bits 15-17)
+msn 0x20 - all off (nothing works)
+msn 0x31-0x33 - fade with random color change. bits 16-19 is how many times to repeat color before change. 0x31 - slower 0x33 faster. fade is single color
+msn 0x40, 0x50, 0x60, 0x70 - white but then keys make it default (blue)
+msn 0x
+
+NOTE: for some reason, for pattern 0x10 (msn) the speed is 0x0000x000 where x is 1-3
+    For 0x30 (msn) the speed is 0x0x000000 where x is 1-3. The 0x000yy00 where yy is
+    1-255 (only tested to 16! (0x10)) is the number of times to repeat a color fading in/out
+    before the color changes. 0x30 is a solid random color while 0x10 ill use the color
+    you set in 0x00000xxx
+
