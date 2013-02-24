@@ -16,6 +16,7 @@
 #include <linux/delay.h>
 #include <linux/dmi.h>
 #include <linux/platform_device.h>
+#include <linux/pm.h>
 
 MODULE_DESCRIPTION("Support for Clevo laptop (P1x0EM and others) backlit keyboard/WMI");
 MODULE_AUTHOR("Copyright 2013 Steven David Seeger steven.seeger@flightsystems.net");
@@ -317,7 +318,7 @@ static struct attribute *kbled_attrs[] = {
     NULL
 };
 
-static struct attribute_group platform_attribute_group = {
+static const struct attribute_group platform_attribute_group = {
     .name = "kbled",
     .attrs = kbled_attrs
 };
@@ -339,11 +340,24 @@ static int __init clevo_wmi_probe(struct platform_device *pdev)
     return sysfs_create_group(&pdev->dev.kobj, &platform_attribute_group);
 }
 
+static int clevo_wmi_resume(struct device *dev)
+{
+    if(clevo_wmi_kbled_exec(kbled_val))
+        return -ENODEV;
+    
+    return 0;
+}
+
+static const struct dev_pm_ops clevo_wmi_pm_ops = {
+    .resume = clevo_wmi_resume
+};
+
 static int __init clevo_wmi_init(void)
 {
     platform_driver.remove = clevo_wmi_remove;
     platform_driver.driver.owner = THIS_MODULE;
     platform_driver.driver.name = "clevo_wmi";
+    platform_driver.driver.pm = &clevo_wmi_pm_ops;
     
     platform_device = platform_create_bundle(&platform_driver, clevo_wmi_probe, NULL, 0, NULL, 0);
     if(IS_ERR(platform_device))
