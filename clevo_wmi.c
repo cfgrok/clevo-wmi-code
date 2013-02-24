@@ -278,6 +278,8 @@ static ssize_t kbled_store_pattern(struct device *dev, struct device_attribute *
 {
     struct pattern_attribute *pa = (struct pattern_attribute*)attr;
 
+    if(buf[0]!='1') return -EINVAL;
+
     kbled_val &= 0xffff; //chop off pattern stuff
     kbled_val |= (pa->pattern<<28);
     
