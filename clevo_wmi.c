@@ -413,4 +413,4 @@ static int __init wmi_poke_init(void)
 
 module_init(clevo_wmi_init);
 module_exit(clevo_wmi_exit);
-MODULE_LICENSE("GPL");
+
