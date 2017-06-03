@@ -1,0 +1,10 @@
+.clevo_wmi.ko.cmd
+.clevo_wmi.mod.o.cmd
+.clevo_wmi.o.cmd
+.tmp_versions
+Module.symvers
+clevo_wmi.ko
+clevo_wmi.mod.c
+clevo_wmi.mod.o
+clevo_wmi.o
+modules.order
